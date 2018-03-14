@@ -1,6 +1,7 @@
 package com.openchat.openchat;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +18,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class MainActivity extends AppCompatActivity implements NameDialog.NameDialogListener {
+public class MainActivity extends AppCompatActivity {
 
     private EditText editMessage;
     private DatabaseReference mDatabase;
@@ -25,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements NameDialog.NameDi
     private RecyclerView messageList;
 
     public static String name;
-
 
 
     @Override
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements NameDialog.NameDi
         linearLayoutManager.setStackFromEnd(true);
         messageList.setLayoutManager(linearLayoutManager);
 
-        openDialog();
 
     }
 
@@ -100,18 +99,6 @@ public class MainActivity extends AppCompatActivity implements NameDialog.NameDi
         }
     }
 
-    public void openDialog() {
-        NameDialog nameDialog = new NameDialog();
-        nameDialog.show(getSupportFragmentManager(), "name dialog");
-    }
-
-    @Override
-
-    public void saveInfo(String username) {
-        //name = (username);
-
-        //mDatabase.child("name").setValue(name);
-    }
 
 
 }
