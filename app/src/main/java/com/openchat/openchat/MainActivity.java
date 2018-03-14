@@ -1,7 +1,6 @@
 package com.openchat.openchat;
 
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,19 +13,12 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 public class MainActivity extends AppCompatActivity {
 
     private EditText editMessage;
     private DatabaseReference mDatabase;
 
     private RecyclerView messageList;
-
-    public static String name;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         messageList.setLayoutManager(linearLayoutManager);
-
 
     }
 
@@ -84,21 +75,8 @@ public class MainActivity extends AppCompatActivity {
         public void setContent(String content) {
             TextView chatMessage = view.findViewById(R.id.messageText);
 
-            TextView messageTime = view.findViewById(R.id.time);
-
-            TextView nameText = view.findViewById(R.id.nameText);
-
             chatMessage.setText(content);
-
-            DateFormat df = new SimpleDateFormat("h:mm a");
-            String date = df.format(Calendar.getInstance().getTime());
-
-            messageTime.setText(date);
-
-            nameText.setText(name);
         }
     }
-
-
 
 }
