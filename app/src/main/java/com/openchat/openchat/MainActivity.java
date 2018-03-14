@@ -13,12 +13,20 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+public class MainActivity extends AppCompatActivity implements NameDialog.NameDialogListener {
 
     private EditText editMessage;
     private DatabaseReference mDatabase;
 
     private RecyclerView messageList;
+
+    public static String name;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         messageList.setLayoutManager(linearLayoutManager);
+
+        openDialog();
 
     }
 
@@ -75,8 +85,33 @@ public class MainActivity extends AppCompatActivity {
         public void setContent(String content) {
             TextView chatMessage = view.findViewById(R.id.messageText);
 
+            TextView messageTime = view.findViewById(R.id.time);
+
+            TextView nameText = view.findViewById(R.id.nameText);
+
             chatMessage.setText(content);
+
+            DateFormat df = new SimpleDateFormat("h:mm a");
+            String date = df.format(Calendar.getInstance().getTime());
+
+            messageTime.setText(date);
+
+            nameText.setText(name);
         }
     }
+
+    public void openDialog() {
+        NameDialog nameDialog = new NameDialog();
+        nameDialog.show(getSupportFragmentManager(), "name dialog");
+    }
+
+    @Override
+
+    public void saveInfo(String username) {
+        //name = (username);
+
+        //mDatabase.child("name").setValue(name);
+    }
+
 
 }
