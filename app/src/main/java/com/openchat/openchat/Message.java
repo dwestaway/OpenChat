@@ -6,7 +6,9 @@ package com.openchat.openchat;
 
 public class Message {
 
-    private  String content;
+    private String content;
+    private String name;
+    private String time;
 
     public Message() {
 
@@ -22,5 +24,21 @@ public class Message {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }
