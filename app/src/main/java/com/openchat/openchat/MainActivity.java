@@ -1,13 +1,16 @@
 package com.openchat.openchat;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
@@ -57,14 +60,25 @@ public class MainActivity extends AppCompatActivity {
                 newPost.child("content").setValue(message);
                 newPost.child("name").setValue(name);
 
-
                 //get current time in time and day
                 DateFormat df = new SimpleDateFormat("hh:mm a dd.MM.yyyy ");
                 String currentTime = df.format(Calendar.getInstance().getTime());
 
                 newPost.child("time").setValue(currentTime);
+
+                //Close keyboard when message is sent
+                InputMethodManager inputManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+            else
+            {
+                Toast.makeText(getApplicationContext(), "Please enter a username", Toast.LENGTH_SHORT).show();
             }
 
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Please enter a message", Toast.LENGTH_SHORT).show();
         }
 
     }
