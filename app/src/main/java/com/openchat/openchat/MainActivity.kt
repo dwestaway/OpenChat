@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         editMessage = findViewById(R.id.editMsg)
         username = findViewById(R.id.username)
 
+        //get database reference
         mDatabase = FirebaseDatabase.getInstance().reference.child("messages")
 
 
@@ -49,21 +50,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun buttonClicked(view: View) {
-        val message = editMessage!!.text.toString().trim { it <= ' ' }
-        val name = username!!.text.toString().trim { it <= ' ' }
 
+        //get message from message text box
+        val message = editMessage!!.text.toString()
+        //get name from username text box
+        val name = username!!.text.toString()
+
+        //if message text and name text are not empty
         if (!TextUtils.isEmpty(message)) {
             if (!TextUtils.isEmpty(name)) {
-                val newPost = mDatabase!!.push()
 
-                newPost.child("content").setValue(message)
-                newPost.child("name").setValue(name)
+                val newPost = mDatabase!!.push()
 
                 //get current time in time and day
                 val df = SimpleDateFormat("hh:mm a dd.MM.yyyy ")
                 val currentTime = df.format(Calendar.getInstance().time)
 
+                //set database values of message
                 newPost.child("time").setValue(currentTime)
+                newPost.child("content").setValue(message)
+                newPost.child("name").setValue(name)
 
                 //Close keyboard when message is sent
                 val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -85,6 +91,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        //Create firebase recycler, used to populate messages
         val firebaseRecycler = object : FirebaseRecyclerAdapter<Message, MessageViewHolder>(Message::class.java, R.layout.messagelayout, MessageViewHolder::class.java, mDatabase) {
             override fun populateViewHolder(viewHolder: MessageViewHolder, model: Message, position: Int) {
                 viewHolder.setContent(model.content)
